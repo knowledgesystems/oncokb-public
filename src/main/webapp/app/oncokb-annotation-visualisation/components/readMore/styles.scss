@@ -1,0 +1,16 @@
+@import './../styles/variables';
+
+.read-more-toggle {
+  color: $oncokb-blue;
+  cursor: pointer;
+  margin-left: 5px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.left-align-content {
+  justify-content: left !important;
+  text-align: left !important;
+}

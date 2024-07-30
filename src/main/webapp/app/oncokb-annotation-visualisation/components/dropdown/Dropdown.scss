@@ -1,0 +1,81 @@
+@import './../styles/variables';
+
+.custom-dropdown {
+  position: relative;
+  text-align: right;
+
+  .btn {
+    background-color: #fff;
+    border: 1px solid #d5d9d9;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #0f1111;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+    line-height: 29px;
+    padding: 3px 10px 3px 11px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    width: 150px;
+    height: 100%;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-height: 15rem;
+    padding: 3%;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 1000;
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $grey;
+    }
+  }
+
+  .form-check {
+    padding: 5px 10px;
+  }
+
+  .form-check-input {
+    margin-right: 10px;
+  }
+
+  .form-check-label {
+    margin: 0;
+  }
+}
+
+input[type='checkbox']:checked {
+  + label:before {
+    width: 21px;
+    letter-spacing: 10px;
+    font-family: FontAwesome;
+    display: inline-block;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-dropdown {
+    position: relative;
+    text-align: left;
+    margin-left: 0 !important;
+    .btn {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+}

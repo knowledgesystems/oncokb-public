@@ -21,7 +21,6 @@ import AdminRoutes from 'app/routes/AdminRoutes';
 import PageContainer from 'app/components/PageContainer';
 import React from 'react';
 import LevelOfEvidencePage, { Version } from 'app/pages/LevelOfEvidencePage';
-import NewsPage from 'app/pages/newsPage/NewsPage';
 import { RecaptchaBoundaryRoute } from '../shared/auth/RecaptchaBoundaryRoute';
 import GenomicPage from 'app/pages/genomicPage/GenomicPage';
 import UserPage from 'app/pages/userPage/UserPage';
@@ -38,6 +37,8 @@ import OncologyTherapiesPage from 'app/pages/oncologyTherapiesPage/oncologyThera
 import { NewsPageNavTab } from 'app/pages/newsPage/NewsPageNavTab';
 import CompanionDiagnosticDevicePage from 'app/pages/companionDiagnosticDevicesPage/companionDiagnosticDevicePage';
 import OncokbRoute from 'app/shared/route/OncokbRoute';
+import { AnnotationVisualisation } from '../oncokb-annotation-visualisation/AnnotationVisualisation';
+import { totalData, patientInfo, notifications } from '../../app/APIResponse';
 
 const getOldLevelsRedirectRoute = (hash: string) => {
   const queryStrings = QueryString.parse(hash) as {
@@ -266,7 +267,18 @@ const AppRouts = (props: {
             path={PAGE_ROUTE.FDA_NGS}
             component={LevelOfEvidencePage}
           />
-
+          <OncokbRoute
+            exact
+            path={PAGE_ROUTE.ANNOTATION_VISUALISATION}
+            render={() => (
+              <AnnotationVisualisation
+                patientInfo={patientInfo}
+                data={totalData}
+                isPatientInfoVisible={false}
+                notifications={notifications}
+              />
+            )}
+          />
           <RecaptchaBoundaryRoute
             exact
             isUserAuthenticated={props.authenticationStore.isUserAuthenticated}

@@ -1,0 +1,47 @@
+@import '~oncokb-styles/scss/vars';
+
+$oncokb-font-font-size: 15px;
+$oncokb-blue: #0968c3;
+/* Overwrite the bootstrap defaults */
+$font-family-sans-serif: 'Gotham Book', serif;
+// color overwrite
+$blue: $oncokb-blue;
+$grey: #808080; // grey
+$light-grey: #d3d3d3; // light grey
+$primary: $oncokb-blue;
+$secondary: $grey;
+$warning: #ffc107;
+$danger: #dc3545;
+
+$link-hover-color: $oncokb-darker-blue;
+$nav-bg-color: $oncokb-blue;
+
+$breadcrumb-bg: transparent;
+$breadcrumb-padding-x: 0;
+$breadcrumb-padding-y: 0;
+$breadcrumb-margin-bottom: 0.5rem;
+
+$navbar-padding-x: 0;
+
+$navbar-item-border-bottom: 0.5rem;
+$navbar-padding-top: $navbar-item-border-bottom;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 1050px,
+  xl: 1413px,
+) !default;
+
+// we only need to define the max width for xl, smaller size will use the fluid width.
+$container-max-widths: (
+  xl: 1500px,
+) !default;
+
+// $font-size-base: 1rem; // or your base font size in rem
+// $nav-link-padding-y: 0.5rem; // converted value from px to rem
+
+// $nav-link-height: ($font-size-base * $line-height-base) + ($nav-link-padding-y * 2);
+
+$bigger-default-font-size: 1.2rem;

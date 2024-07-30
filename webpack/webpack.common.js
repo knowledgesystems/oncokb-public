@@ -135,7 +135,7 @@ module.exports = options => ({
         SERVER_API_URL: `''`,
       },
     }),
-    new ForkTsCheckerWebpackPlugin({ eslint: true }),
+    //new ForkTsCheckerWebpackPlugin({ eslint: true }),
     new CopyWebpackPlugin([
       {
         from: './node_modules/swagger-ui-dist/*.{js,css,html,png}',

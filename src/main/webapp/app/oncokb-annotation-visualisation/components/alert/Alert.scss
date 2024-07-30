@@ -1,0 +1,37 @@
+.alert {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  min-height: 3rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+  background-color: white; /* Adjust background color as needed */
+  text-align: left;
+  .mr-2 {
+    padding-right: 0.8rem;
+  }
+  &-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+
+  &-primary {
+    color: #004085;
+    background-color: #cce5ff;
+    border-color: #b8daff;
+  }
+
+  &-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+  }
+
+  &-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+}

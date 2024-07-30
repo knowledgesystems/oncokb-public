@@ -1,0 +1,42 @@
+@import './../styles/variables';
+
+.notification-container {
+  position: relative;
+  text-align: right;
+
+  .notification-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .notification-icon {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -6px;
+      left: 10px;
+      background-color: $danger;
+      color: #fff;
+      width: 0.9rem;
+      height: 0.9rem;
+      border-radius: 50%;
+      font-size: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+  }
+
+  .notification-dropdown {
+    margin-top: 15px;
+    position: absolute;
+    top: 10px;
+    width: 300px;
+    right: 0px;
+    z-index: 1001;
+  }
+}

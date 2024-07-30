@@ -8,6 +8,7 @@
     "node_modules"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.24.7",
     "@hot-loader/react-dom": "^16.13.0",
     "@mskcc/core": "^10.2.0",
     "@sentry/react": "^7.72.0",

@@ -1,0 +1,174 @@
+@import './../styles/variables';
+
+.oncoKBTable-container {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+
+    .table-header-left {
+      color: $oncokb-blue;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: flex-end;
+      font-weight: bold !important;
+      flex: 1;
+    }
+
+    .table-header-right {
+      display: flex;
+      align-items: flex-end;
+      flex: 1;
+
+      .search-container,
+      .dropdown-container {
+        flex: 1;
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .table-header-right {
+        flex-direction: row;
+        width: 100%;
+
+        .search-container,
+        .dropdown-container {
+          width: 100%;
+          margin-left: 1rem;
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .justify-center {
+    justify-content: center;
+  }
+
+  .fixedHeight {
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+}
+
+// Overwrite react-table styles
+.oncokbReactTable.ReactTable {
+  .-sort-desc {
+    box-shadow: none !important;
+    &:before {
+      font-family: FontAwesome;
+      content: '\f0dd';
+      float: right;
+    }
+  }
+
+  .-sort-asc {
+    box-shadow: none !important;
+    &:before {
+      font-family: FontAwesome;
+      content: '\f0de';
+      float: right;
+    }
+  }
+
+  .rt-table {
+    border: none;
+    &::-webkit-scrollbar {
+      height: 0.5em;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $light-grey;
+    }
+
+    .rt-thead {
+      border: none;
+
+      .rt-resizable-header-content {
+        border: none;
+        font-weight: bold;
+        justify-content: center;
+        align-items: center;
+        margin: 15px;
+        white-space: normal;
+        word-break: break-word;
+      }
+    }
+
+    .rt-tbody {
+      border: none;
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $light-grey;
+      }
+
+      overflow-x: hidden;
+      overflow-y: hidden;
+
+      &.has-data {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      &.no-data {
+        overflow-x: hidden;
+        overflow-y: hidden;
+      }
+
+      .rt-td {
+        border: none;
+        text-align: center;
+        white-space: normal;
+        word-break: break-word;
+        min-height: 7vh;
+      }
+    }
+  }
+}
+
+.no-results {
+  min-height: 15vh;
+  text-align: center;
+  align-items: center;
+  margin-top: 4vh;
+}
+
+.oncokbTable-main {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.no-results {
+  min-height: 15vh;
+  text-align: center;
+  align-items: center;
+  margin-top: 4vh;
+}
+
+.oncokbTable-main {
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+}

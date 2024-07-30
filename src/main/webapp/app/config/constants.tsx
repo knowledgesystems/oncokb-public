@@ -590,6 +590,7 @@ export enum PAGE_ROUTE {
   ACCOUNT_PASSWORD_RESET_REQUEST = '/account/reset/request',
   ACCOUNT_PASSWORD_RESET_FINISH = '/account/reset/finish',
   ACCOUNT_ACTIVE_TRIAL_FINISH = '/account/active-trial/finish',
+  ANNOTATION_VISUALISATION = '/annotate',
 }
 
 export enum TABLE_COLUMN_KEY {
@@ -727,7 +728,6 @@ export enum ACCOUNT_TITLES {
   API_TOKEN = 'API Token',
   LICENSE_TYPE = 'License',
   ADDITIONAL_INFO_USE_CASE = 'Use Case',
-  ADDITIONAL_INFO_API_ACCESS_JUSTIFICATION = 'API Access Justification',
 }
 
 export enum API_CALL_STATUS {

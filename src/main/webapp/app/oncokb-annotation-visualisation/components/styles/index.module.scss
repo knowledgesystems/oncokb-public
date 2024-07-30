@@ -1,0 +1,73 @@
+@import 'variables';
+
+// Custom styles
+.btnLinkText {
+  @extend .btn-link !optional;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.linkOutText {
+  color: #0968c3;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.biggerText {
+  font-size: 1.2rem;
+}
+
+:global(.btn).actionButton {
+  border: 1px solid #d3d3d3;
+  background-color: white;
+  border-radius: 0.5rem;
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+// Overwrite react-responsive-tabs
+:global(.RRT__tab) {
+  z-index: 0 !important;
+}
+
+.nav-link {
+  color: white;
+  background-color: #d3d3d3;
+}
+
+.notification-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fda-icon-size {
+  font-size: 5;
+
+  line-height: '10px' !important;
+}
+
+.fa-circle-thin {
+  color: red !important;
+}
+.info-icon-overlay {
+  max-width: 400;
+  max-height: 400;
+  padding: 5%;
+  font-size: 0.8rem;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $grey;
+  }
+}
