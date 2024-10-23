@@ -7,6 +7,7 @@ import React, { ReactNode } from 'react';
 import {
   AMPLIFICATION,
   APP_LOCAL_DATE_FORMAT,
+  APP_LOCAL_DATETIME_FORMAT,
   APP_LOCAL_DATETIME_FORMAT_Z,
   APP_TIMESTAMP_FORMAT,
   CATEGORICAL_ALTERATIONS,
@@ -594,6 +595,13 @@ export function toAppTimestampFormat(utcTime: string | undefined) {
 export function toAppLocalDateFormat(utcTime: string | undefined) {
   if (!utcTime) return '';
   return moment(utcTime, APP_LOCAL_DATETIME_FORMAT_Z).format(
+    APP_LOCAL_DATE_FORMAT
+  );
+}
+
+export function toUtcDateFormat(utcTime: string | undefined) {
+  if (!utcTime) return '';
+  return moment(utcTime, APP_LOCAL_DATETIME_FORMAT).format(
     APP_LOCAL_DATE_FORMAT
   );
 }
