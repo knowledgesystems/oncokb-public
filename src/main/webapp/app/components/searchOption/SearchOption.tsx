@@ -1,5 +1,8 @@
 import React from 'react';
-import { levelOfEvidence2Level, OncoKBAnnotationIcon } from 'app/shared/utils/Utils';
+import {
+  levelOfEvidence2Level,
+  OncoKBAnnotationIcon,
+} from 'app/shared/utils/Utils';
 import { Else, If, Then } from 'react-if';
 import Highlighter from 'react-highlight-words';
 import styles from './SearchOption.module.scss';
@@ -50,9 +53,15 @@ const GeneSearchOption: React.FunctionComponent<{
           searchWords={[props.search]}
           textToHighlight={`${props.data.gene.hugoSymbol} (Entrez Gene: ${props.data.gene.entrezGeneId})`}
         />
-        {props.data.annotation && Object.values(GENETIC_TYPE).includes(props.data.annotation.toLowerCase() as GENETIC_TYPE) && (
-          <GeneticTypeTag geneticType={props.data.annotation.toLowerCase() === 'germline' ? GENETIC_TYPE.GERMLINE : GENETIC_TYPE.SOMATIC} className={'ml-2'}/>
-        )}
+        {props.data.annotation &&
+          Object.values(GENETIC_TYPE).includes(
+            props.data.annotation.toLowerCase() as GENETIC_TYPE
+          ) && (
+            <GeneticTypeTag
+              isGermline={props.data.annotation.toLowerCase() === 'germline'}
+              className={'ml-2'}
+            />
+          )}
         {props.data.highestSensitiveLevel ||
         props.data.highestResistanceLevel ? (
           <span className={classnames(styles.subTitle, 'ml-2')}>

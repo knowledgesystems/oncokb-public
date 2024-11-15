@@ -1,4 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  createContext,
+  useContext,
+  useCallback,
+} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Row, Col, Container } from 'react-bootstrap';
 import styles from './StickyMiniNavBar.module.scss';
@@ -43,6 +50,35 @@ function getHeader() {
   return document.querySelector('header');
 }
 
+export const StickyMiniNavBarContext = createContext<{
+  invalidateCache: () => void;
+  counter: number;
+}>({
+  invalidateCache() {
+    throw new Error(
+      'StickyMiniNavBarContext was not set, please add a StickyMiniNavBarContextProvider'
+    );
+  },
+  counter: 0,
+});
+
+export function StickyMiniNavBarContextProvider({
+  children,
+}: {
+  children: React.ReactNode[];
+}) {
+  const [counter, setCounter] = useState(0);
+
+  const invalidateCache = useCallback(() => {
+    setCounter(x => x + 1);
+  }, [setCounter]);
+  return (
+    <StickyMiniNavBarContext.Provider value={{ counter, invalidateCache }}>
+      {children}
+    </StickyMiniNavBarContext.Provider>
+  );
+}
+
 export default function StickyMiniNavBar({
   title,
   stickyBackgroundColor,
@@ -56,6 +92,7 @@ export default function StickyMiniNavBar({
   const [passedElements, setPassedElements] = useState<
     Record<string, { isPassed: boolean; isInView: boolean }>
   >({});
+  const { counter } = useContext(StickyMiniNavBarContext);
   const stickyDivRef = useRef<HTMLDivElement | null>(null);
   useScrollToHash({
     stickyHeight:
@@ -97,7 +134,7 @@ export default function StickyMiniNavBar({
         resizeObserver.unobserve(headerElement);
       }
     };
-  }, []);
+  }, [counter]);
 
   useEffect(() => {
     const miniNavBarSections = getNavBarSectionElements();
@@ -183,6 +220,10 @@ export default function StickyMiniNavBar({
     }
   }
 
+  if (sections.length < 2) {
+    return <></>;
+  }
+
   return (
     <div
       className={classNames(
@@ -198,14 +239,7 @@ export default function StickyMiniNavBar({
       <Container>
         <Row className="justify-content-center">
           <Col md={11}>
-            <nav
-              ref={stickyDivRef}
-              className={classnames('d-flex flex-row', styles.nav)}
-              style={{
-                gap: '40px',
-                height: '49px',
-              }}
-            >
+            <nav ref={stickyDivRef} className={classnames(styles.nav)}>
               {isSticky && (
                 <Link
                   className={classnames(styles.stickyHeader)}

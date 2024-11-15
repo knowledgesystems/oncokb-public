@@ -8,7 +8,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { LEVELS } from 'app/config/constants';
 
 export const LevelWithDescription: React.FunctionComponent<{
-  level: LEVELS;
+  level: LEVELS | undefined;
   appStore?: AppStore;
   description?: string;
 }> = inject('appStore')(props => {

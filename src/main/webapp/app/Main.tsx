@@ -104,16 +104,12 @@ class Main extends React.Component<IMainPage> {
           routing={this.props.routing}
           appStore={this.props.appStore}
         />
-        <PageContainer
+        <AppRoutes
+          authenticationStore={this.props.authenticationStore}
+          appStore={this.props.appStore}
           routing={this.props.routing}
           windowStore={this.props.windowStore}
-        >
-          <AppRoutes
-            authenticationStore={this.props.authenticationStore}
-            appStore={this.props.appStore}
-            routing={this.props.routing}
-          />
-        </PageContainer>
+        />
         <FeedbackModal
           showModal={this.props.appStore.showFeedbackFormModal}
           feedback={this.feedbackAnnotation}

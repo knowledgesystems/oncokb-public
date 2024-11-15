@@ -35,14 +35,16 @@ export const getHostLinkWithProtocol = (): string => {
 
 export const getGenePageLink = (props: {
   hugoSymbol: string;
-  geneticType?: GENETIC_TYPE;
   searchQueries?: GenePageSearchQueries;
   hashQueries?: GenePageHashQueries;
   withProtocolHostPrefix?: boolean;
+  germline?: boolean;
 }): string => {
   let pageLink = `${PAGE_ROUTE.GENE_HEADER}/${props.hugoSymbol}`;
-  if (props.geneticType) {
-    pageLink += `/${props.geneticType}`;
+  if (props.germline !== undefined) {
+    pageLink += `/${
+      props.germline ? GENETIC_TYPE.GERMLINE : GENETIC_TYPE.SOMATIC
+    }`;
   }
   if (props.searchQueries && Object.keys(props.searchQueries).length > 0) {
     pageLink = `${pageLink}?${QueryString.stringify(props.searchQueries)}`;
@@ -89,6 +91,7 @@ export const getAlterationPageLink = (props: {
   searchQueries?: AlterationPageSearchQueries;
   hashQueries?: AlterationPageHashQueries;
   withProtocolHostPrefix?: boolean;
+  germline?: boolean;
 }): string => {
   const linkoutAltName = getCategoricalAlteration(
     typeof props.alteration === 'string'
@@ -96,7 +99,12 @@ export const getAlterationPageLink = (props: {
       : props.alteration.name
   );
 
-  let pageLink = `${PAGE_ROUTE.GENE_HEADER}/${props.hugoSymbol}/${linkoutAltName}`;
+  const geneTypePath =
+    props.germline !== undefined
+      ? `/${props.germline ? 'germline' : 'somatic'}`
+      : '';
+
+  let pageLink = `${PAGE_ROUTE.GENE_HEADER}/${props.hugoSymbol}${geneTypePath}/${linkoutAltName}`;
   if (props.cancerType) {
     pageLink = `${pageLink}/${encodeSlash(props.cancerType)}`;
   }
@@ -128,6 +136,7 @@ export const AlterationPageLink: React.FunctionComponent<{
   searchQueries?: AlterationPageSearchQueries;
   hashQueries?: AlterationPageHashQueries;
   showGene?: boolean;
+  germline?: boolean;
   onClick?: () => void;
 }> = props => {
   const alterationName = getAlterationName(props.alteration, true);
@@ -138,6 +147,7 @@ export const AlterationPageLink: React.FunctionComponent<{
     cancerType: props.cancerType,
     searchQueries: props.searchQueries,
     hashQueries: props.hashQueries,
+    germline: props.germline,
   });
   return (
     <>
@@ -164,6 +174,7 @@ export const getAlternativeAllelesPageLinks = (
       const alleleLines = alternativeAlleles.split('/').map((allele, index) => {
         return (
           <AlterationPageLink
+            key={index}
             hugoSymbol={hugoSymbol}
             alteration={`${positionalVar}${allele}`}
           >
@@ -206,6 +217,28 @@ export const parseGenePagePath = (pathname: string) => {
     (pathname.endsWith(GENETIC_TYPE.SOMATIC) ||
       pathname.endsWith(GENETIC_TYPE.GERMLINE));
   if (startsWithGene && (inBasicGenePage || inExtendedGenePage)) {
+    const segments = pathname.split('/') || [];
+    const result: GenePagePath = {
+      hugoSymbol: segments[1],
+    };
+    if (segments.length > 3) {
+      result.geneticType = segments[3] as GENETIC_TYPE;
+    }
+    return result;
+  } else {
+    return {};
+  }
+};
+
+export type AlterationPagePath = {
+  hugoSymbol?: string;
+  geneticType?: GENETIC_TYPE;
+};
+
+export const parseAlterationPagePath = (pathname: string) => {
+  const startsWithGene = pathname.startsWith(PAGE_ROUTE.GENE_HEADER);
+  const inExtendedGenePage = (pathname.match(/\//g) || []).length >= 4;
+  if (startsWithGene && inExtendedGenePage) {
     const segments = pathname.split('/') || [];
     const result: GenePagePath = {
       hugoSymbol: segments[1],

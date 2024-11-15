@@ -16,7 +16,7 @@ enum GENE_TYPE_DESC {
   TUMOR_SUPPRESSOR = 'Tumor Suppressor',
 }
 
-const HighestLevelItem: React.FunctionComponent<{
+export const HighestLevelItem: React.FunctionComponent<{
   level: LEVELS;
   key?: string;
 }> = props => {
