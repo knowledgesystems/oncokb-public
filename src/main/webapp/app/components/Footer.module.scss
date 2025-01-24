@@ -8,21 +8,45 @@
   position: absolute;
   bottom: 0;
 
-  a {
+  a,
+  button {
     color: white;
   }
 
-  a:hover {
+  a:hover,
+  button:hover {
     color: white;
+  }
+
+  button {
+    background: none;
   }
 }
 
-.footerAList > a {
+.footerAList > a,
+.footerAList > button {
   line-height: 1rem;
   border-right: 0.5px solid #fff;
   padding: 0 0.5rem;
 
   &:last-child {
     border: 0;
+  }
+  @media (min-width: 1050px) {
+    & > :not(:global(.d-lg-none)):last-of-type {
+      border: 0;
+    }
+  }
+}
+.footerAList > button:hover {
+  text-decoration: underline;
+}
+
+.internalLinks {
+  text-align: center;
+  @media (min-width: 1050px) {
+    & {
+      text-align: right;
+    }
   }
 }

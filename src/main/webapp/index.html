@@ -33,6 +33,9 @@
     <link rel="preload" as="font" href="content/Gotham-Black.otf" type="font/otf" crossorigin="anonymous"/>
     <link rel="manifest" href="manifest.webapp" />
     <link rel="stylesheet" href="content/css/loading.css">
+    <script>
+      function a(b){try{var c=new URL(b).hostname,d=c.split('.'),f=d.length-1;return d.splice(d.length>=3&&(d[f]+d[f-1]).length<=5?-3:-2).join('.')}catch(g){return null}}function h(i,j,k){var l=document.createElement('script');l.src=i,l.onload=function(){j&&j()},l.onerror=function(){k&&k()},document.head.appendChild(l)}function m(){var n={widgetProfileId:4,languageCode:"",licenseKey:"F6644E2E-E9BA-4B04-8F70-EB4370598BDD",region:"use",environment:"production",crossDomainConsent:false};window.CassieWidgetLoader=new CassieWidgetLoaderModule(n)}function o(){var p=a(window.location.href),q=p?'https://cscript-cdn-use.'+p+'/loader.js':'https://cscript-cdn-use.cassiecloud.com/loader.js';h(q,function(){window.cassieResourceRootDomain=p,m()},function(){h('https://cscript-cdn-use.cassiecloud.com/loader.js',function(){m()})})}o();
+    </script>
     <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
 </head>
 <body>

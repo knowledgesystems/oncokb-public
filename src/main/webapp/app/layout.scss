@@ -37,7 +37,7 @@ $view-wrapper-default-p-y: 2rem !default;
 }
 
 @include media-breakpoint-up(xs) {
-  $footer-height: 22rem;
+  $footer-height: 26rem;
   $header-height: 4.5rem;
   @include sticky-footer(1rem, $footer-height);
   @include sticky-panel-under-header($header-height);
@@ -70,7 +70,7 @@ $view-wrapper-default-p-y: 2rem !default;
 }
 
 @include media-breakpoint-up(sm) {
-  $footer-height: 17rem;
+  $footer-height: 19rem;
   @include sticky-footer($view-wrapper-default-p-y, $footer-height);
 }
 
