@@ -106,6 +106,7 @@ public class OncokbPublicApp {
                 options.addIgnoredExceptionForType(CustomMessageRuntimeException.class);
                 options.addIgnoredExceptionForType(BadRequestAlertException.class);
                 options.addIgnoredExceptionForType(ResourceAccessException.class);
+                options.addIgnoredExceptionForType(TokenExpiredException.class);
             });
         }
     }
