@@ -82,6 +82,21 @@ const DownloadButtonGroups: React.FunctionComponent<{
           buttonText="Cancer Gene List"
         />
       ) : null}
+      {props.data.hasAllAnnotatedVariants && (
+        <AuthDownloadButton
+          className={BUTTON_CLASS_NAME}
+          fileName={`all_annotated_variants_${props.data.version}.tsv`}
+          getDownloadData={async () => {
+            const data = await oncokbClient.utilsAllAnnotatedVariantsTxtGetUsingGET(
+              {
+                version: props.data.version,
+              }
+            );
+            return data;
+          }}
+          buttonText="All Annotated Variants"
+        />
+      )}
       {props.data.hasAllActionableVariants ? (
         <>
           <AuthDownloadButton
