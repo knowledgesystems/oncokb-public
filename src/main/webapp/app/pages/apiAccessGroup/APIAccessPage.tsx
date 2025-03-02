@@ -52,6 +52,7 @@ function getMinorVersion(versionString: string): number | undefined {
 const BUTTON_CLASS_NAME = 'mr-2 my-1';
 const DownloadButtonGroups: React.FunctionComponent<{
   data: DownloadAvailabilityWithDate;
+  authenticationStore: AuthenticationStore;
 }> = props => {
   const majorVersion = getMajorVersion(props.data.version) ?? 0;
   const minorVersion = getMinorVersion(props.data.version) ?? 0;
@@ -82,7 +83,43 @@ const DownloadButtonGroups: React.FunctionComponent<{
           buttonText="Cancer Gene List"
         />
       ) : null}
-      {props.data.hasAllActionableVariants ? (
+      {props.authenticationStore.account?.authorities.includes(
+        USER_AUTHORITY.ROLE_PREMIUM_USER
+      ) && (
+        <>
+          {props.data.hasAllActionableVariants && (
+            <AuthDownloadButton
+              className={BUTTON_CLASS_NAME}
+              fileName={`all_actionable_variants_${props.data.version}.tsv`}
+              getDownloadData={async () => {
+                const data = await oncokbClient.utilsAllActionableVariantsTxtGetUsingGET(
+                  {
+                    version: props.data.version,
+                  }
+                );
+                return data;
+              }}
+              buttonText="All Actionable Variants"
+            />
+          )}
+          {props.data.hasAllAnnotatedVariants && (
+            <AuthDownloadButton
+              className={BUTTON_CLASS_NAME}
+              fileName={`all_annotated_variants_${props.data.version}.tsv`}
+              getDownloadData={async () => {
+                const data = await oncokbClient.utilsAllAnnotatedVariantsTxtGetUsingGET(
+                  {
+                    version: props.data.version,
+                  }
+                );
+                return data;
+              }}
+              buttonText="All Annotated Variants"
+            />
+          )}
+        </>
+      )}
+      {props.data.hasSqlDump ? (
         <>
           <AuthDownloadButton
             className={BUTTON_CLASS_NAME}
@@ -276,6 +313,7 @@ export default class APIAccessPage extends React.Component<{
                         </p>
                         <DownloadButtonGroups
                           data={this.dataAvailability.result[0]}
+                          authenticationStore={this.props.authenticationStore}
                         />
 
                         {this.dataAvailability.result.length > 1 ? (
@@ -311,6 +349,9 @@ export default class APIAccessPage extends React.Component<{
                                   <Col>
                                     <DownloadButtonGroups
                                       data={this.selectedData}
+                                      authenticationStore={
+                                        this.props.authenticationStore
+                                      }
                                     />
                                   </Col>
                                 </Row>
