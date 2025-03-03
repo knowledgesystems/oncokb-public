@@ -735,8 +735,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             }
           },
           "201": {
@@ -3877,8 +3876,7 @@
           "type": "boolean"
         },
         "token": {
-          "type": "string",
-          "format": "uuid"
+          "type": "string"
         },
         "usageLimit": {
           "type": "integer",

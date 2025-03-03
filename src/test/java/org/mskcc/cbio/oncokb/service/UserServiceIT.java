@@ -3,8 +3,10 @@ package org.mskcc.cbio.oncokb.service;
 import org.mskcc.cbio.oncokb.OncokbPublicApp;
 import org.mskcc.cbio.oncokb.config.Constants;
 import org.mskcc.cbio.oncokb.domain.Token;
+import org.mskcc.cbio.oncokb.domain.TokenKey;
 import org.mskcc.cbio.oncokb.domain.User;
 import org.mskcc.cbio.oncokb.domain.enumeration.LicenseType;
+import org.mskcc.cbio.oncokb.domain.enumeration.TokenType;
 import org.mskcc.cbio.oncokb.repository.UserRepository;
 import org.mskcc.cbio.oncokb.service.dto.UserDTO;
 import org.mskcc.cbio.oncokb.service.dto.useradditionalinfo.AdditionalInfoDTO;
@@ -33,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
@@ -256,12 +257,12 @@ public class UserServiceIT {
         User savedUser = userRepository.saveAndFlush(user);
 
         Token renewableToken = new Token();
-        renewableToken.setToken(UUID.randomUUID());
+        renewableToken.setToken(TokenKey.generate(TokenType.USER).getFullToken());
         renewableToken.setUser(savedUser);
         renewableToken.setRenewable(true);
 
         Token nonRenewableToken = new Token();
-        nonRenewableToken.setToken(UUID.randomUUID());
+        nonRenewableToken.setToken(TokenKey.generate(TokenType.USER).getFullToken());
         nonRenewableToken.setUser(savedUser);
         nonRenewableToken.setRenewable(false);
 
@@ -283,12 +284,12 @@ public class UserServiceIT {
         User savedUser = userRepository.saveAndFlush(user);
 
         Token nonRenewableToken = new Token();
-        nonRenewableToken.setToken(UUID.randomUUID());
+        nonRenewableToken.setToken(TokenKey.generate(TokenType.USER).getFullToken());
         nonRenewableToken.setUser(savedUser);
         nonRenewableToken.setRenewable(false);
 
         Token nonRenewableToken2 = new Token();
-        nonRenewableToken2.setToken(UUID.randomUUID());
+        nonRenewableToken2.setToken(TokenKey.generate(TokenType.USER).getFullToken());
         nonRenewableToken2.setUser(savedUser);
         nonRenewableToken2.setRenewable(false);
 
@@ -310,7 +311,7 @@ public class UserServiceIT {
         User savedUser = userRepository.saveAndFlush(user);
 
         Token nonRenewableToken = new Token();
-        nonRenewableToken.setToken(UUID.randomUUID());
+        nonRenewableToken.setToken(TokenKey.generate(TokenType.USER).getFullToken());
         nonRenewableToken.setUser(savedUser);
         nonRenewableToken.setExpiration(Instant.now().plus(DEFAULT_TRIAL_PERIOD_IN_DAYS - 30, ChronoUnit.DAYS));
         nonRenewableToken.setRenewable(false);
@@ -334,7 +335,7 @@ public class UserServiceIT {
         Instant longerUserTokenLength = Instant.now().plus(DEFAULT_TRIAL_PERIOD_IN_DAYS + 30, ChronoUnit.DAYS);
 
         Token nonRenewableToken = new Token();
-        nonRenewableToken.setToken(UUID.randomUUID());
+        nonRenewableToken.setToken(TokenKey.generate(TokenType.USER).getFullToken());
         nonRenewableToken.setUser(savedUser);
         nonRenewableToken.setExpiration(longerUserTokenLength);
         nonRenewableToken.setRenewable(false);

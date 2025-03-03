@@ -33,7 +33,7 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     Optional<Token> findPublicWebsiteToken();
 
     @Cacheable(cacheResolver = "tokenCacheResolver")
-    Optional<Token> findByToken(UUID token);
+    Optional<Token> findByToken(String token);
 
     @Cacheable(cacheResolver = "tokenCacheResolver")
     @Query("select token from Token token where token.user.login = ?1")

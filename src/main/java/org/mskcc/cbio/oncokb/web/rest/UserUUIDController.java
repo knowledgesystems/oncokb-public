@@ -1,6 +1,5 @@
 package org.mskcc.cbio.oncokb.web.rest;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.mskcc.cbio.oncokb.domain.Token;
 import org.mskcc.cbio.oncokb.security.uuid.UUIDFilter;
 import org.mskcc.cbio.oncokb.security.uuid.TokenProvider;
@@ -34,7 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -60,7 +58,7 @@ public class UserUUIDController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<UUID> authorize(@Valid @RequestBody LoginVM loginVM) {
+    public ResponseEntity<String> authorize(@Valid @RequestBody LoginVM loginVM) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
@@ -69,7 +67,7 @@ public class UserUUIDController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         List<Token> tokenList = tokenService.findByUserIsCurrentUser();
-        UUID uuid;
+        String uuid;
 
         if (tokenList.size() > 0) {
             List<Token> validTokens = tokenList.stream().filter(token -> token.getExpiration().isAfter(Instant.now())).collect(Collectors.toList());

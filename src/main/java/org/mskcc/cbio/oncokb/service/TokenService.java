@@ -39,7 +39,7 @@ public interface TokenService {
 
     Optional<Token> findPublicWebsiteToken();
 
-    Optional<Token> findByToken(UUID token);
+    Optional<Token> findByToken(String token);
 
     List<Token> findByUserIsCurrentUser();
 

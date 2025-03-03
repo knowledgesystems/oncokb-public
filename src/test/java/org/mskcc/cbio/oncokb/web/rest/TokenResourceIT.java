@@ -1,19 +1,35 @@
 package org.mskcc.cbio.oncokb.web.rest;
 
-import org.mskcc.cbio.oncokb.RedisTestContainerExtension;
-import org.mskcc.cbio.oncokb.OncokbPublicApp;
-import org.mskcc.cbio.oncokb.domain.Token;
-import org.mskcc.cbio.oncokb.domain.User;
-import org.mskcc.cbio.oncokb.repository.TokenRepository;
-import org.mskcc.cbio.oncokb.repository.UserRepository;
-import org.mskcc.cbio.oncokb.service.TokenService;
-import org.mskcc.cbio.oncokb.security.AuthoritiesConstants;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.UUID;
+
+import javax.persistence.EntityManager;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mskcc.cbio.oncokb.OncokbPublicApp;
+import org.mskcc.cbio.oncokb.domain.Token;
+import org.mskcc.cbio.oncokb.domain.TokenKey;
+import org.mskcc.cbio.oncokb.domain.User;
+import org.mskcc.cbio.oncokb.domain.enumeration.TokenType;
+import org.mskcc.cbio.oncokb.repository.TokenRepository;
+import org.mskcc.cbio.oncokb.repository.UserRepository;
+import org.mskcc.cbio.oncokb.security.AuthoritiesConstants;
+import org.mskcc.cbio.oncokb.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,16 +37,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link TokenResource} REST controller.
@@ -41,8 +47,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
 public class TokenResourceIT {
 
-    private static final UUID DEFAULT_TOKEN = UUID.randomUUID();
-    private static final UUID UPDATED_TOKEN = UUID.randomUUID();
+    private static final String DEFAULT_TOKEN = TokenKey.generate(TokenType.USER).getFullToken();
+    private static final String UPDATED_TOKEN = TokenKey.generate(TokenType.USER).getFullToken();
 
     private static final Instant DEFAULT_CREATION = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_CREATION = Instant.now().truncatedTo(ChronoUnit.MILLIS);

@@ -5,6 +5,7 @@ import org.mskcc.cbio.oncokb.config.Constants;
 import org.mskcc.cbio.oncokb.config.application.ApplicationProperties;
 import org.mskcc.cbio.oncokb.domain.*;
 import org.mskcc.cbio.oncokb.domain.enumeration.FileExtension;
+import org.mskcc.cbio.oncokb.domain.enumeration.TokenType;
 import org.mskcc.cbio.oncokb.querydomain.UserTokenUsage;
 import org.mskcc.cbio.oncokb.repository.UserDetailsRepository;
 import org.mskcc.cbio.oncokb.security.AuthoritiesConstants;
@@ -151,7 +152,7 @@ public class CronJobController {
         Instant newTokenDefaultExpirationDate = Instant.now().plusSeconds(DAY_IN_SECONDS * 15);
         userDTOs.stream().forEach(userDTO -> {
             Instant expirationDate = userDTO.getCreatedDate() == null ? newTokenDefaultExpirationDate : userDTO.getCreatedDate().plusSeconds(DEFAULT_TOKEN_EXPIRATION_IN_SECONDS);
-            tokenProvider.createToken(userMapper.userDTOToUser(userDTO), Optional.of(expirationDate.isBefore(newTokenDefaultExpirationDate) ? newTokenDefaultExpirationDate : expirationDate), Optional.empty(), Optional.empty());
+            tokenProvider.createToken(userMapper.userDTOToUser(userDTO), TokenType.USER, Optional.of(expirationDate.isBefore(newTokenDefaultExpirationDate) ? newTokenDefaultExpirationDate : expirationDate), Optional.empty(), Optional.empty());
         });
     }
 
@@ -292,7 +293,7 @@ public class CronJobController {
      * @param token
      */
     private void updateExposedToken(Token token) {
-        tokenProvider.createToken(token, Optional.ofNullable(token.getName()));
+        tokenProvider.createToken(token, TokenType.USER, Optional.ofNullable(token.getName()));
         token.setExpiration(Instant.now());
         tokenService.save(token);
     }

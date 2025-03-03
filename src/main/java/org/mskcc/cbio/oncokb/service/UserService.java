@@ -10,6 +10,7 @@ import org.mskcc.cbio.oncokb.domain.*;
 import org.mskcc.cbio.oncokb.domain.enumeration.LicenseModel;
 import org.mskcc.cbio.oncokb.domain.enumeration.LicenseStatus;
 import org.mskcc.cbio.oncokb.domain.enumeration.LicenseType;
+import org.mskcc.cbio.oncokb.domain.enumeration.TokenType;
 import org.mskcc.cbio.oncokb.repository.AuthorityRepository;
 import org.mskcc.cbio.oncokb.repository.CompanyDomainRepository;
 import org.mskcc.cbio.oncokb.repository.CompanyRepository;
@@ -42,7 +43,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.cache.annotation.Cacheable;
 
-import javax.mail.MessagingException;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -645,6 +645,7 @@ public class UserService {
         if (tokens.isEmpty()) {
             Token token = tokenProvider.createToken(
                 userMapper.userDTOToUser(userDTO),
+                TokenType.USER,
                 tokenValidDays.isPresent() ? Optional.of(Instant.now().plusSeconds(DAY_IN_SECONDS * (long) tokenValidDays.get())) : Optional.empty(),
                 tokenIsRenewable,
                 Optional.empty()
