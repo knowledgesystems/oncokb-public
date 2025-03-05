@@ -5,25 +5,22 @@
 
 .headerContent {
   gap: 0.5rem;
+  display: grid;
+  grid-template-columns: minmax(0px, 100%);
+}
+
+.centerContent {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  justify-items: center;
 }
 
 .headerContentGene {
-  text-wrap: nowrap;
+  word-wrap: break-word;
 }
 
 @media (min-width: 600px) {
   .headerContent {
-    justify-content: flex-start;
-  }
-}
-
-@media (min-width: 800px) {
-  .headerContent {
-    flex-wrap: nowrap;
+    grid-template-columns: min-content minmax(0px, 100%) min-content;
   }
 }

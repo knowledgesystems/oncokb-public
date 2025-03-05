@@ -14,7 +14,7 @@ export type BreadcrumbType = 'text' | 'link' | 'input' | 'dropdown';
 export interface IBasicBreadcrumb {
   type: BreadcrumbType;
   active?: boolean;
-  //key: string;
+  // key: string;
   text: string;
   className?: string;
 }

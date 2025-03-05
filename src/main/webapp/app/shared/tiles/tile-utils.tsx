@@ -207,8 +207,8 @@ function createPathogenicityTileProps(
           value: variantAnnotation.pathogenic,
         },
         {
-          title: 'Clinvar',
-          value: 'Clinvar not Implemented',
+          title: 'ClinVar',
+          value: 'ClinVar not Implemented',
           link: '#',
         },
       ],

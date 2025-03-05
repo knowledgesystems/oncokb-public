@@ -24,21 +24,30 @@ export default function GermlineSomaticHeader({
   return (
     <h1 className={classnames(styles.header, 'h2')}>
       <div className={classnames(styles.headerContent)}>
-        <span className={classnames(styles.headerContentGene)}>
-          {annotation?.gene} {alterationNameWithDiff}{' '}
+        <span
+          className={classnames(styles.headerContentGene, styles.centerContent)}
+        >
+          {annotation?.gene}
+          {/* force a space between character between the two spans */}
+          &nbsp;
         </span>
-        <GeneticTypeTag className={'ml-2'} isGermline={isGermline} />
-        {extra}
-        <span style={{ fontSize: '0.5em' }} className={'ml-2'}>
-          {includeEmailLink && (
-            <FeedbackIcon
-              feedback={{
-                type: FeedbackType.ANNOTATION,
-                annotation,
-              }}
-              appStore={appStore}
-            />
-          )}
+        <span className={classnames(styles.headerContentGene)}>
+          <span>{alterationNameWithDiff} </span>
+        </span>
+        <span className={classnames(styles.centerContent)}>
+          <GeneticTypeTag className={'ml-2'} isGermline={isGermline} />
+          {extra}
+          <span style={{ fontSize: '0.5em' }} className={'ml-2'}>
+            {includeEmailLink && (
+              <FeedbackIcon
+                feedback={{
+                  type: FeedbackType.ANNOTATION,
+                  annotation,
+                }}
+                appStore={appStore}
+              />
+            )}
+          </span>
         </span>
       </div>
     </h1>
