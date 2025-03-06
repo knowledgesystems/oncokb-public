@@ -4,9 +4,9 @@
 }
 
 .headerContent {
-  gap: 0.5rem;
   display: grid;
-  grid-template-columns: minmax(0, max-content);
+  gap: 0.5rem;
+  grid-template-columns: 1fr;
 }
 
 .centerContent {
@@ -15,12 +15,16 @@
   justify-items: center;
 }
 
+.centerContent.extraContent {
+  gap: 0.5rem;
+}
+
 .headerContentGene {
   word-wrap: break-word;
 }
 
 @media (min-width: 600px) {
   .headerContent {
-    grid-template-columns: min-content minmax(0, max-content) min-content;
+    grid-template-columns: max-content minmax(0, max-content) 1fr;
   }
 }

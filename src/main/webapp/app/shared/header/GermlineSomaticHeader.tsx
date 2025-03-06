@@ -32,9 +32,9 @@ export default function GermlineSomaticHeader({
           &nbsp;
         </span>
         <span className={classnames(styles.headerContentGene)}>
-          <span>{alterationNameWithDiff} </span>
+          {alterationNameWithDiff}
         </span>
-        <span className={classnames(styles.centerContent)}>
+        <span className={classnames(styles.extraContent, styles.centerContent)}>
           <GeneticTypeTag className={'ml-2'} isGermline={isGermline} />
           {extra}
           <span style={{ fontSize: '0.5em' }} className={'ml-2'}>

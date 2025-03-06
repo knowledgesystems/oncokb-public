@@ -17,31 +17,26 @@ import {
   getTreatmentNameByPriority,
   articles2Citations,
   isCategoricalAlteration,
-  citationsHasInfo,
   isPositionalAlteration,
-  OncoKBOncogenicityIcon,
+  getCategoricalAlterationDescription,
 } from 'app/shared/utils/Utils';
 import {
   getAlterationPageLink,
   parseAlterationPagePath,
-  getGenePageLink,
   AlterationPageLink,
 } from 'app/shared/utils/UrlUtils';
 import { computed, reaction, action, observable } from 'mobx';
 import { GENETIC_TYPE } from 'app/components/geneticTypeTabs/GeneticTypeTabs';
 import { observer, inject } from 'mobx-react';
-import { Link } from 'react-router-dom';
 import styles from './SomaticGermlineAlterationPage.module.scss';
-import classNames from 'classnames';
+import classnames from 'classnames';
 import StickyMiniNavBar, {
   StickyMiniNavBarContextProvider,
 } from 'app/shared/nav/StickyMiniNavBar';
-import AlterationView from '../annotationPage/AlterationView';
 import AppStore from 'app/store/AppStore';
 import ShowHideText from 'app/shared/texts/ShowHideText';
 import { Col, Alert } from 'reactstrap';
 import { Row, Container } from 'react-bootstrap';
-import { CancerTypeView } from '../annotationPage/CancerTypeView';
 import WindowStore from 'app/store/WindowStore';
 import AuthenticationStore from 'app/store/AuthenticationStore';
 import {
@@ -49,14 +44,11 @@ import {
   REFERENCE_GENOME,
   ANNOTATION_PAGE_TAB_KEYS,
   TREATMENT_EVIDENCE_TYPES,
-  ONCOKB_TM,
-  MUTATION_EFFECT,
   ONCOGENICITY,
+  DEFAULT_MARGIN_BOTTOM_LG,
+  DEFAULT_MARGIN_TOP_LG,
 } from 'app/config/constants';
-import {
-  Alteration,
-  MutationEffectResp,
-} from 'app/shared/api/generated/OncoKbAPI';
+import { Alteration } from 'app/shared/api/generated/OncoKbAPI';
 import {
   Evidence,
   VariantAnnotationTumorType,
@@ -72,25 +64,18 @@ import autobind from 'autobind-decorator';
 import { AlterationPageHashQueries } from 'app/shared/route/types';
 import MutationEffectDescription from '../annotationPage/MutationEffectDescription';
 import MiniNavBarHeader from 'app/shared/nav/MiniNavBarHeader';
-import SomaticGermlineTiles from '../../shared/tiles/SomaticGermlineTiles';
-import HighestLevelEvidence from './HighestLevelEvidence';
 import { GenomicIndicatorTable } from '../genePage/GenomicIndicatorTable';
 import { Else, If, Then } from 'react-if';
 import LoadingIndicator, {
   LoaderSize,
 } from 'app/components/loadingIndicator/LoadingIndicator';
-import { CitationTooltip } from 'app/components/CitationTooltip';
-import { DefaultTooltip } from 'cbioportal-frontend-commons';
-import {
-  COLOR_ICON_WITH_INFO,
-  COLOR_ICON_WITHOUT_INFO,
-} from 'app/config/theme';
 import SomaticGermlineAlterationView from '../annotationPage/SomaticGermlineAlterationView';
 import GermlineSomaticHeader from 'app/shared/header/GermlineSomaticHeader';
 import SomaticGermlineBreadcrumbs from 'app/shared/nav/SomaticGermlineBreadcrumbs';
 import { RouterStore } from 'mobx-react-router';
 import { SomaticGermlineAlterationTiles } from 'app/shared/tiles/tile-utils';
 import GeneticTypeTag from 'app/components/geneticTypeTag/GeneticTypeTag';
+import VariantOverView from 'app/shared/sections/VariantOverview';
 
 type MatchParams = {
   hugoSymbol: string;
@@ -578,15 +563,22 @@ export class SomaticGermlineAlterationPage extends React.Component<
                   />
                 </Col>
                 <Col md={11}>
-                  <Row className={classNames(styles.descriptionContainer)}>
+                  <Row className={classnames(styles.descriptionContainer)}>
                     <Col>
-                      <h3>Variant Overview</h3>
-                      {this.store.annotationData.result.background}
+                      <VariantOverView
+                        alterationSummaries={this.alterationSummaries}
+                        hugoSymbol={this.store.hugoSymbol}
+                        alteration={
+                          this.store.annotationData.result.query.alteration
+                        }
+                        oncogene={this.store.gene.result.oncogene}
+                        tsg={this.store.gene.result.tsg}
+                      />
                     </Col>
                   </Row>
                   {this.store.annotationData.result.mutationEffect
                     .description && (
-                    <Row className={classNames(styles.descriptionContainer)}>
+                    <Row className={classnames(styles.descriptionContainer)}>
                       <Col>
                         <ShowHideText
                           show={this.showMutationEffect}

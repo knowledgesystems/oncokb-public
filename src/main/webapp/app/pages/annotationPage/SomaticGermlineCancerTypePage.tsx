@@ -72,6 +72,8 @@ import SomaticGermlineCancerTypeSelect from 'app/shared/dropdown/SomaticGermline
 import { RouterStore } from 'mobx-react-router';
 import { SomaticGermlineAlterationTiles } from 'app/shared/tiles/tile-utils';
 import GeneticTypeTag from 'app/components/geneticTypeTag/GeneticTypeTag';
+import VariantOverView from 'app/shared/sections/VariantOverview';
+import styles from './SomaticGermlineCancerTypePage.module.scss';
 
 type MatchParams = {
   hugoSymbol: string;
@@ -601,10 +603,17 @@ export class SomaticGermlineCancerTypePage extends React.Component<
                   />
                 </Col>
                 <Col md={11}>
-                  <Row>
+                  <Row className={classnames(styles.descriptionContainer)}>
                     <Col>
-                      <h3>Variant Overview</h3>
-                      {this.store.annotationData.result.background}
+                      <VariantOverView
+                        alterationSummaries={this.alterationSummaries}
+                        hugoSymbol={this.store.hugoSymbol}
+                        alteration={
+                          this.store.annotationData.result.query.alteration
+                        }
+                        oncogene={this.store.gene.result.oncogene}
+                        tsg={this.store.gene.result.tsg}
+                      />
                     </Col>
                   </Row>
                   {this.store.annotationData.result.mutationEffect
