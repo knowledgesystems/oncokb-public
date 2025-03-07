@@ -25,7 +25,7 @@ export default function VariantOverView({
     tsg
   );
   return (
-    <>
+    <div style={{ wordWrap: 'break-word' }}>
       <h3>Variant Overview</h3>
 
       {categoricalAlterationDescription && (
@@ -44,6 +44,6 @@ export default function VariantOverView({
         );
       })}
       <div className={classnames('mt-2')}></div>
-    </>
+    </div>
   );
 }
