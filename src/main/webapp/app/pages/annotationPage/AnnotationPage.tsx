@@ -20,7 +20,7 @@ import {
 } from 'app/config/constants';
 import styles from 'app/pages/alterationPage/AlterationPage.module.scss';
 import { AlterationInfo } from 'app/pages/annotationPage/AlterationInfo';
-import { Col, Row, Alert } from 'react-bootstrap';
+import { Col, Row, Alert, Container } from 'react-bootstrap';
 import classnames from 'classnames';
 import { action, computed, observable } from 'mobx';
 import * as QueryString from 'querystring';
@@ -752,33 +752,37 @@ export default class AnnotationPage extends React.Component<
         this.props.store.gene.result === DEFAULT_GENE) ? (
       <UnknownGeneAlert />
     ) : (
-      <>
-        {this.navBreadcrumbs}
-        {this.pageShouldBeRendered ? (
-          this.props.store.annotationData.result.query.hugoSymbol ? (
-            this.getAnnotationComponents()
-          ) : (
-            <Alert variant="warning" className={'text-center'}>
-              We do not have any information for this variant
-            </Alert>
-          )
-        ) : (
-          <If condition={this.props.store.annotationData.isError}>
-            <Then>
-              <Alert variant="warning" className={'text-center'}>
-                An error occurred while annotating your variant.
-              </Alert>
-            </Then>
-            <Else>
-              <LoadingIndicator
-                size={LoaderSize.LARGE}
-                center={true}
-                isLoading={true}
-              />
-            </Else>
-          </If>
-        )}
-      </>
+      <Container>
+        <Row className="justify-content-center">
+          <Col md={11}>
+            {this.navBreadcrumbs}
+            {this.pageShouldBeRendered ? (
+              this.props.store.annotationData.result.query.hugoSymbol ? (
+                this.getAnnotationComponents()
+              ) : (
+                <Alert variant="warning" className={'text-center'}>
+                  We do not have any information for this variant
+                </Alert>
+              )
+            ) : (
+              <If condition={this.props.store.annotationData.isError}>
+                <Then>
+                  <Alert variant="warning" className={'text-center'}>
+                    An error occurred while annotating your variant.
+                  </Alert>
+                </Then>
+                <Else>
+                  <LoadingIndicator
+                    size={LoaderSize.LARGE}
+                    center={true}
+                    isLoading={true}
+                  />
+                </Else>
+              </If>
+            )}
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

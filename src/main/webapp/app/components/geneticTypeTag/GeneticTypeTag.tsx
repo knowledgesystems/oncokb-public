@@ -5,19 +5,19 @@ import styles from './genetic-type-tag.module.scss';
 import { capitalize } from 'cbioportal-frontend-commons';
 
 const GeneticTypeTag: FunctionComponent<{
-  geneticType: GENETIC_TYPE;
+  isGermline: boolean;
   className?: string;
 }> = props => {
   return (
     <span
       className={classnames(
         props.className,
-        props.geneticType === GENETIC_TYPE.GERMLINE
-          ? styles.germlineTag
-          : styles.somaticTag
+        props.isGermline ? styles.germlineTag : styles.somaticTag
       )}
     >
-      {capitalize(props.geneticType)}
+      {capitalize(
+        props.isGermline ? GENETIC_TYPE.GERMLINE : GENETIC_TYPE.SOMATIC
+      )}
     </span>
   );
 };

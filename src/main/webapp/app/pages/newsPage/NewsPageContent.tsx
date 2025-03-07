@@ -2238,8 +2238,9 @@ export const NEWS_BY_DATE: { [date: string]: NewsData } = {
                 <td>
                   <span>
                     <WithSeparator separator={', '}>
-                      {['S371C', 'G380R', 'K650'].map(alt => (
+                      {['S371C', 'G380R', 'K650'].map((alt, index) => (
                         <AlterationPageLink
+                          key={index}
                           hugoSymbol="FGFR3"
                           alteration={alt}
                         />

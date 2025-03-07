@@ -1,52 +1,32 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { RouteProps, Route, RouteComponentProps } from 'react-router';
-
-type CanonicalLinkProps = { routeProps: RouteComponentProps };
-
-function CanonicalLink({ routeProps }: CanonicalLinkProps) {
-  useEffect(() => {
-    const canonicalEndpoint = routeProps.location.pathname;
-    const linkNode = document.createElement('link');
-
-    linkNode.setAttribute('id', 'canonical');
-    linkNode.setAttribute('rel', 'canonical');
-    linkNode.setAttribute(
-      'href',
-      `${location.protocol}//${location.host}${canonicalEndpoint}`
-    );
-
-    document.head.appendChild(linkNode);
-
-    return () => {
-      document.head.removeChild(linkNode);
-    };
-  }, [routeProps]);
-  return <></>;
-}
+import PageContainer from 'app/components/PageContainer';
+import WindowStore from 'app/store/WindowStore';
 
 export type OncokbRouteProps = RouteProps & {
-  addCanonicalLink?: boolean;
+  pageContainer?: (props: {
+    windowStore: WindowStore;
+    children: JSX.Element;
+  }) => JSX.Element;
+  windowStore: WindowStore;
 };
 
 export default function OncokbRoute({
   render,
   component,
-  addCanonicalLink = false,
+  windowStore,
+  pageContainer = props => <PageContainer {...props} />,
   ...rest
 }: OncokbRouteProps) {
   const newRender = (props: RouteComponentProps) => {
     return render ? (
-      <>
-        {render(props)}
-        {addCanonicalLink && <CanonicalLink routeProps={props} />}
-      </>
+      <>{render(props)}</>
     ) : (
-      <>
-        {React.createElement(component!, props)}
-
-        {addCanonicalLink && <CanonicalLink routeProps={props} />}
-      </>
+      <>{React.createElement(component!, props)}</>
     );
   };
-  return <Route render={newRender} {...rest} />;
+  return pageContainer({
+    windowStore,
+    children: <Route render={newRender} {...rest} />,
+  });
 }

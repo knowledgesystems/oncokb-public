@@ -12,7 +12,11 @@ const ShowHideText: React.FunctionComponent<{
   return (
     <div className={props.className}>
       <div
-        style={{ cursor: 'pointer', color: COLOR_PRIMARY }}
+        style={{
+          cursor: 'pointer',
+          color: COLOR_PRIMARY,
+          marginBottom: '0.5rem',
+        }}
         onClick={() => props.onClick()}
       >
         <span>{`${props.show ? 'Hide' : 'Show'} ${props.title}`}</span>{' '}

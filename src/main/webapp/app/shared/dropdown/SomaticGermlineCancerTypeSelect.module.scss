@@ -1,0 +1,11 @@
+.cancerTypeWrapper {
+  min-width: 30dvw;
+  //min-width: clamp(20px, 100dvw, 100%);
+  width: 100%;
+  max-width: 600px;
+  z-index: 200;
+}
+
+.pretext {
+  margin-right: 1rem;
+}

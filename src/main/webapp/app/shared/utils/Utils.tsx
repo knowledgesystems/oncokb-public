@@ -142,7 +142,7 @@ export function toggleStrList(element: string, list: string[]) {
   return list;
 }
 
-export function level2LevelOfEvidence(level: LEVELS) {
+export function level2LevelOfEvidence(level: LEVELS | undefined) {
   switch (level) {
     case LEVELS.Tx3:
     case LEVELS.Tx3A:
@@ -275,6 +275,7 @@ export const OncoKBOncogenicityIcon: React.FunctionComponent<{
   oncogenicity: string | undefined;
   isVus: boolean;
   className?: string;
+  classNameParent?: string;
 }> = props => {
   let oncogenicity = props.oncogenicity;
   if (oncogenicity === undefined) {
@@ -284,6 +285,7 @@ export const OncoKBOncogenicityIcon: React.FunctionComponent<{
     <span
       style={{ width: 16, marginTop: -3, marginLeft: 3 }}
       key={'oncokb-oncogenicity-icone'}
+      className={props.classNameParent}
     >
       <i
         className={classnames(
@@ -314,7 +316,7 @@ export const OncoKBLevelIcon: React.FunctionComponent<{
 };
 
 export const FdaLevelIcon: React.FunctionComponent<{
-  level: LEVELS;
+  level: LEVELS | undefined;
   withDescription?: boolean;
   size?: 's1' | 's2' | 's3';
 }> = ({ level, withDescription = true, size = 's1' }) => {
@@ -324,11 +326,14 @@ export const FdaLevelIcon: React.FunctionComponent<{
     lineHeight: `${16 * scale}px`,
     margin: '0 3px',
   };
+  if (level === undefined) {
+    return <></>;
+  }
   const fdaIcon = (
     <span className="fa-stack" style={style}>
       <span className="fa fa-circle-thin fa-stack-2x"></span>
       <strong className="fa-stack-1x" style={{ fontSize: '1em' }}>
-        {level.toString().replace('Fda', '')}
+        {level?.toString().replace('Fda', '')}
       </strong>
     </span>
   );

@@ -691,7 +691,7 @@ export const DATA: { [key in TableKey]: TableData } = {
         'ALK Fusions',
         'Inflammatory Myofibroblastic Tumor',
         'Crizotinib',
-        'Novel clinically actionable biomarker in this cancer type ',
+        'Novel clinically actionable biomarker in this cancer type',
       ],
       [
         'KRAS G12C',
@@ -711,24 +711,24 @@ export const DATA: { [key in TableKey]: TableData } = {
         'BRCA2 Oncogenic Mutations',
         'Uterine Sarcoma',
         'Olaparib, Rucaparib, Niraparib',
-        'Novel clinically actionable biomarker in this cancer type ',
+        'Novel clinically actionable biomarker in this cancer type',
       ],
       [
         'PALB2 Oncogenic Mutations',
         'Pancreatic Cancer',
         'Rucaparib',
-        'Novel clinically actionable biomarker in this cancer type ',
+        'Novel clinically actionable biomarker in this cancer type',
       ],
       [
         'BRCA1/2 Oncogenic Mutations',
         'Pancreatic Cancer',
         'Rucaparib',
-        'Novel clinically actionable biomarker in this cancer type ',
+        'Novel clinically actionable biomarker in this cancer type',
       ],
       [
         'EGFR S768I, L861Q, G719',
         'Non-Small Cell Lung Cancer',
-        'Osimertinib ',
+        'Osimertinib',
         'Addition of novel drug to an existing clinically actionable biomarker',
       ],
       [
@@ -765,15 +765,15 @@ export const DATA: { [key in TableKey]: TableData } = {
     [LEVELS.Tx3]: [
       [
         'KRAS G12C',
-        'Gastrointestinal cancers ',
+        'Gastrointestinal cancers',
         'Adagrasib',
-        'Novel clinically actionable biomarker in this cancer type ',
+        'Novel clinically actionable biomarker in this cancer type',
       ],
       [
         'KRAS G12C',
         'Pancreatic cancer',
         'Sotorasib',
-        'Novel clinically actionable biomarker in this cancer type ',
+        'Novel clinically actionable biomarker in this cancer type',
       ],
       [
         'TP53 Y220C',
@@ -820,13 +820,13 @@ export const DATA: { [key in TableKey]: TableData } = {
       [
         'KMT2A Fusions',
         'B-Lymphoblastic Leukemia/Lymphoma, Acute Myeloid Leukemia',
-        'SNDX-5613 ',
+        'SNDX-5613',
         'Novel clinically actionable biomarker',
       ],
       [
         'NPM1 Oncogenic Mutations',
         'Acute Myeloid Leukemia',
-        'SNDX-5613 ',
+        'SNDX-5613',
         'Novel clinically actionable biomarker',
       ],
     ],
@@ -835,7 +835,7 @@ export const DATA: { [key in TableKey]: TableData } = {
         'PIK3CA Oncogenic Mutations',
         <div style={{ minWidth: 150 }}>All Solid Tumors</div>,
         'RLY-2608',
-        'Novel clinically actionable biomarker in this cancer type ',
+        'Novel clinically actionable biomarker in this cancer type',
       ],
       [
         'PIK3CA H1047R',

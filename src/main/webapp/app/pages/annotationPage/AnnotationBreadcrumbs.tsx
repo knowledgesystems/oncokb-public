@@ -6,14 +6,17 @@ import Select from 'react-select';
 import { REFERENCE_GENOME } from 'app/config/constants';
 import { COLOR_BLUE } from 'app/config/theme';
 import { Option } from 'app/shared/select/FormSelectWithLabelField';
+import classnames from 'classnames';
+import styles from './AnnotationBreadcrumbs.module.scss';
 
 export type BreadcrumbType = 'text' | 'link' | 'input' | 'dropdown';
 
 export interface IBasicBreadcrumb {
   type: BreadcrumbType;
   active?: boolean;
-  key: string;
+  // key: string;
   text: string;
+  className?: string;
 }
 
 export interface ITextBreadcrumb extends IBasicBreadcrumb {
@@ -51,7 +54,7 @@ const Icon: React.FunctionComponent<{
 };
 const TextBreadcrumb: React.FunctionComponent<IBasicBreadcrumb> = props => {
   return (
-    <Breadcrumb.Item key={props.key} active={props.active}>
+    <Breadcrumb.Item active={props.active} className={props.className}>
       {props.text}
     </Breadcrumb.Item>
   );
@@ -60,10 +63,10 @@ const TextBreadcrumb: React.FunctionComponent<IBasicBreadcrumb> = props => {
 const LinkBreadcrumb: React.FunctionComponent<ILinkBreadcrumb> = props => {
   return (
     <Breadcrumb.Item
-      key={props.key}
       linkAs={Link}
       linkProps={{ to: props.to }}
       active={props.active}
+      className={props.className}
     >
       {props.text}
     </Breadcrumb.Item>
@@ -75,7 +78,11 @@ const InputBreadcrumb: React.FunctionComponent<IInputBreadcrumb> = props => {
   const [text, setText] = useState(props.text);
   const editableContentFontSize = '13px';
   return (
-    <Breadcrumb.Item key={props.key} active style={{ color: COLOR_BLUE }}>
+    <Breadcrumb.Item
+      active
+      style={{ color: COLOR_BLUE }}
+      className={props.className}
+    >
       <If condition={editing}>
         <Then>
           <span style={{ fontSize: editableContentFontSize }}>
@@ -136,7 +143,11 @@ const InputBreadcrumb: React.FunctionComponent<IInputBreadcrumb> = props => {
 const DropdownBreadcrumb: React.FunctionComponent<IDropdownBreadcrumb> = props => {
   const [editing, setEditing] = useState(false);
   return (
-    <Breadcrumb.Item key={props.key} active style={{ color: COLOR_BLUE }}>
+    <Breadcrumb.Item
+      active
+      style={{ color: COLOR_BLUE }}
+      className={props.className}
+    >
       <If condition={editing}>
         <Then>
           <Select
@@ -214,11 +225,12 @@ export const AnnotationBreadcrumbs: React.FunctionComponent<{
   return (
     <Breadcrumb>
       {props.breadcrumbs.map((breadcrumb, index) => {
-        const commonProps: IBasicBreadcrumb = {
+        const commonProps: IBasicBreadcrumb & { key: number } = {
           type: 'text',
-          key: breadcrumb.key,
+          key: index,
           text: breadcrumb.text,
           active: index === props.breadcrumbs.length - 1,
+          className: classnames(styles.breadcrumb),
         };
         switch (breadcrumb.type) {
           case 'text':
