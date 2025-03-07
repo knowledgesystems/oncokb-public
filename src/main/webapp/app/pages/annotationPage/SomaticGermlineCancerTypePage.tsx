@@ -529,6 +529,11 @@ export class SomaticGermlineCancerTypePage extends React.Component<
   }
 
   render() {
+    const hasImplications =
+      this.fdaImplication.length > 0 ||
+      this.therapeuticImplications.length > 0 ||
+      this.diagnosticImplications.length > 0 ||
+      this.prognosticImplications.length > 0;
     return (
       <div className="view-wrapper">
         <Helmet>
@@ -642,19 +647,6 @@ export class SomaticGermlineCancerTypePage extends React.Component<
                 </Col>
               </Row>
             </Container>
-            <StickyMiniNavBar
-              title={
-                <span className={'d-flex align-items-center'}>
-                  <span>
-                    {this.store.hugoSymbol} {this.store.alterationNameWithDiff}{' '}
-                  </span>
-                  <GeneticTypeTag
-                    className={'ml-2'}
-                    isGermline={this.store.germline}
-                  />
-                </span>
-              }
-            />
             <Container>
               <Row className="justify-content-center">
                 <Col md={11}>
@@ -678,15 +670,37 @@ export class SomaticGermlineCancerTypePage extends React.Component<
                         />
                       </>
                     )}
-                  {(this.fdaImplication.length > 0 ||
-                    this.therapeuticImplications.length > 0 ||
-                    this.diagnosticImplications.length > 0 ||
-                    this.prognosticImplications.length > 0) && (
+                </Col>
+              </Row>
+              <Row className="justify-content-center">
+                <Col md={11}>
+                  {hasImplications && (
+                    <h3>
+                      Clinical Implications of This Biomarker in{' '}
+                      {this.store.tumorTypeQuery}
+                    </h3>
+                  )}
+                </Col>
+              </Row>
+            </Container>
+            <StickyMiniNavBar
+              title={
+                <span className={'d-flex align-items-center'}>
+                  <span>
+                    {this.store.hugoSymbol} {this.store.alterationNameWithDiff}{' '}
+                  </span>
+                  <GeneticTypeTag
+                    className={'ml-2'}
+                    isGermline={this.store.germline}
+                  />
+                </span>
+              }
+            />
+            <Container>
+              <Row className="justify-content-center">
+                <Col md={11}>
+                  {hasImplications && (
                     <>
-                      <h3>
-                        Clinical Implications of This Biomarker in{' '}
-                        {this.store.tumorTypeQuery}
-                      </h3>
                       <CancerTypeView
                         somaticGermline={true}
                         appStore={this.props.appStore}
