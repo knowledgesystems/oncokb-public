@@ -602,6 +602,17 @@ export class SomaticGermlineAlterationPage extends React.Component<
                 </Col>
               </Row>
             </Container>
+            <Container>
+              <Row className="justify-content-center">
+                <Col md={11}>
+                  <SomaticGermlineAlterationTiles
+                    includeTitle
+                    variantAnnotation={this.store.annotationData.result}
+                    isGermline={this.store.germline}
+                  />
+                </Col>
+              </Row>
+            </Container>
             <StickyMiniNavBar
               title={
                 <span className={'d-flex align-items-center'}>
@@ -616,15 +627,6 @@ export class SomaticGermlineAlterationPage extends React.Component<
               }
             />
             <Container>
-              <Row className="justify-content-center">
-                <Col md={11}>
-                  <SomaticGermlineAlterationTiles
-                    includeTitle
-                    variantAnnotation={this.store.annotationData.result}
-                    isGermline={this.store.germline}
-                  />
-                </Col>
-              </Row>
               <Row className="justify-content-center">
                 <Col md={11}>
                   {this.store.germline &&
