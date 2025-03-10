@@ -222,6 +222,11 @@ const AppRoutes = (props: {
         <OncokbRoute exact path={PAGE_ROUTE.SOP} component={AboutPageNavTab} />
         <OncokbRoute
           exact
+          path={PAGE_ROUTE.PRIVACY}
+          component={AboutPageNavTab}
+        />
+        <OncokbRoute
+          exact
           path={PAGE_ROUTE.YEAR_END_SUMMARY}
           component={NewsPageNavTab}
         />

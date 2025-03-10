@@ -13,6 +13,7 @@ import { LocationDescriptorObject } from 'history';
 import classnames from 'classnames';
 import { getPageTitle } from 'app/shared/utils/Utils';
 import { Helmet } from 'react-helmet-async';
+import PrivacyPage from '../PrivacyPage';
 
 type AboutPageNavTabProps = { appStore: AppStore; routing: RouterStore };
 
@@ -21,6 +22,7 @@ export enum TabKey {
   TEAM = PAGE_ROUTE.TEAM,
   FDA_RECOGNITION = PAGE_ROUTE.FDA_RECOGNITION,
   SOP = PAGE_ROUTE.SOP,
+  PRIVACY = PAGE_ROUTE.PRIVACY,
 }
 
 const YEAR_END_SUMMARY_KEY_DIVIDER = '+';
@@ -105,6 +107,9 @@ export class AboutPageNavTab extends React.Component<AboutPageNavTabProps> {
                 <Nav.Item>
                   <Nav.Link eventKey={TabKey.SOP}>SOP</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey={TabKey.PRIVACY}>Privacy</Nav.Link>
+                </Nav.Item>
               </Nav>
             </Col>
             <Col sm={10}>
@@ -137,6 +142,9 @@ export class AboutPageNavTab extends React.Component<AboutPageNavTabProps> {
                       />
                     </div>
                   </div>
+                </Tab.Pane>
+                <Tab.Pane eventKey={TabKey.PRIVACY}>
+                  <PrivacyPage />
                 </Tab.Pane>
               </Tab.Content>
             </Col>
