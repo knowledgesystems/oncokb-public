@@ -16,7 +16,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * REST controller for managing {@link org.mskcc.cbio.oncokb.domain.Token}.
@@ -96,14 +95,14 @@ public class TokenResource {
     @GetMapping("/tokens/{uuid}")
     public ResponseEntity<Token> getToken(@PathVariable String uuid) {
         log.debug("REST request to get Token : {}", uuid);
-        Optional<Token> token = tokenService.findByToken(UUID.fromString(uuid));
+        Optional<Token> token = tokenService.findByToken(uuid);
         return ResponseUtil.wrapOrNotFound(token);
     }
 
     @DeleteMapping("/tokens/{uuid}")
     public ResponseEntity<Void> deleteTokenWithoutTransferringStats(@PathVariable String uuid) {
         log.debug("REST request to delete Token : {}", uuid);
-        Optional<Token> token = tokenService.findByToken(UUID.fromString(uuid));
+        Optional<Token> token = tokenService.findByToken(uuid);
         if (!token.isPresent()) {
             return ResponseEntity.notFound().build();   
         }

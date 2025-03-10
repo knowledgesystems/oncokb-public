@@ -43,9 +43,11 @@ export const InfoRow: React.FunctionComponent<{
   title: JSX.Element | string;
   content?: JSX.Element | string;
   direction?: 'vertical' | 'horizontal';
+  titleWidth?: number;
+  contentWidth?: number;
 }> = props => {
-  let titleWidth = 4;
-  let contentWidth = 8;
+  let titleWidth = props.titleWidth ?? 4;
+  let contentWidth = props.contentWidth ?? 8;
   if (props.direction && props.direction === 'vertical') {
     titleWidth = contentWidth = 12;
   }
@@ -207,6 +209,8 @@ export class AccountPage extends React.Component<IRegisterProps> {
 
     const apiAccess = (
       <InfoRow
+        titleWidth={3}
+        contentWidth={9}
         title={
           <div className={'d-flex align-items-center'}>
             <span>

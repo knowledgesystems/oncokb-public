@@ -29,6 +29,7 @@
     <include file="config/liquibase/changelog/20210927165433_added_entity_constraints_Company.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20241208231350_add_column_name_to_token.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240829165533_added_additionalInfo_to_Company.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250123141000_modify_token_column_length.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

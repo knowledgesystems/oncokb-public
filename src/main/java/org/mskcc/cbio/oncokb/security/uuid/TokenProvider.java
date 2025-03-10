@@ -2,7 +2,9 @@ package org.mskcc.cbio.oncokb.security.uuid;
 
 import org.mskcc.cbio.oncokb.domain.Authority;
 import org.mskcc.cbio.oncokb.domain.Token;
+import org.mskcc.cbio.oncokb.domain.TokenKey;
 import org.mskcc.cbio.oncokb.domain.User;
+import org.mskcc.cbio.oncokb.domain.enumeration.TokenType;
 import org.mskcc.cbio.oncokb.repository.UserRepository;
 import org.mskcc.cbio.oncokb.security.AuthoritiesConstants;
 import org.mskcc.cbio.oncokb.security.SecurityUtils;
@@ -50,11 +52,11 @@ public class TokenProvider implements InitializingBean {
         return tokenService.findByUser(userLogin);
     }
 
-    private Token getNewToken(Set<Authority> authorities, Optional<Instant> definedExpirationTime) {
-        return getNewToken(authorities, definedExpirationTime, Optional.of(true));
+    private Token getNewToken(Set<Authority> authorities, TokenType tokenType, Optional<Instant> definedExpirationTime) {
+        return getNewToken(authorities, tokenType, definedExpirationTime, Optional.of(true));
     }
 
-    private Token getNewToken(Set<Authority> authorities, Optional<Instant> definedExpirationTime, Optional<Boolean> isRenewable) {
+    private Token getNewToken(Set<Authority> authorities, TokenType tokenType, Optional<Instant> definedExpirationTime, Optional<Boolean> isRenewable) {
         Token token = new Token();
         Instant currentTime = Instant.now();
         token.setCreation(currentTime);
@@ -73,20 +75,20 @@ public class TokenProvider implements InitializingBean {
                 Instant.now().plusSeconds(EXPIRATION_TIME_PUBLIC_WEBSITE_IN_SECONDS) : currentTime.plusSeconds(EXPIRATION_TIME_IN_SECONDS);
             token.setExpiration(expirationTime);
         }
-        token.setToken(UUID.randomUUID());
+        token.setToken(TokenKey.generate(tokenType).getFullToken());
         return token;
     }
 
     public Token createTokenForCurrentUserLogin(Optional<Instant> definedExpirationTime, Optional<Boolean> isRenewable) {
         Optional<User> userOptional = userRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get());
         if(userOptional.isPresent()) {
-            return createToken(userOptional.get(), definedExpirationTime, isRenewable, Optional.empty());
+            return createToken(userOptional.get(), TokenType.USER ,definedExpirationTime, isRenewable, Optional.empty());
         }
         return null;
     }
 
-    public Token createToken(User user, Optional<Instant> definedExpirationTime, Optional<Boolean> isRenewable, Optional<String> name) {
-        Token token = getNewToken(user.getAuthorities(), definedExpirationTime, isRenewable);
+    public Token createToken(User user, TokenType tokenType, Optional<Instant> definedExpirationTime, Optional<Boolean> isRenewable, Optional<String> name) {
+        Token token = getNewToken(user.getAuthorities(), tokenType, definedExpirationTime, isRenewable);
         token.setUser(user);
         if (name.isPresent()) {
             token.setName(name.get());
@@ -95,8 +97,8 @@ public class TokenProvider implements InitializingBean {
         return token;
     }
 
-    public void createToken(Token token, Optional<String> name){
-        Token newToken = createToken(token.getUser(), Optional.of(token.getExpiration()), Optional.of(token.isRenewable()), name);
+    public void createToken(Token token, TokenType tokenType, Optional<String> name){
+        Token newToken = createToken(token.getUser(), tokenType, Optional.of(token.getExpiration()), Optional.of(token.isRenewable()), name);
         newToken.setCreation(token.getCreation());
         newToken.setCurrentUsage(token.getCurrentUsage());
         newToken.setUsageLimit(token.getUsageLimit());
@@ -104,20 +106,20 @@ public class TokenProvider implements InitializingBean {
     }
 
     // This method is used in the frontend thymeleaf parsing
-    public UUID getPubWebToken() {
+    public String getPubWebToken() {
         Optional<User> user = userRepository.findOneWithAuthoritiesByLogin(PUBLIC_WEBSITE_LOGIN);
         if (user.isPresent()) {
             Token userToken = new Token();
             Optional<Token> tokenOptional  = tokenService.findPublicWebsiteToken();
             if (!tokenOptional.isPresent()) {
-                Token newToken = getNewToken(user.get().getAuthorities(), Optional.empty());
+                Token newToken = getNewToken(user.get().getAuthorities(), TokenType.USER, Optional.empty());
                 newToken.setUser(user.get());
                 userToken = tokenService.save(newToken);
             } else {
                 userToken = tokenOptional.get();
                 if (userToken.getExpiration().isBefore(Instant.now())) {
                     // I want to update the token associated with public website once it's expired
-                    Token newToken = getNewToken(user.get().getAuthorities(), Optional.empty(), Optional.empty());
+                    Token newToken = getNewToken(user.get().getAuthorities(), TokenType.USER, Optional.empty(), Optional.empty());
                     userToken.setToken(newToken.getToken());
                     userToken.setCreation(newToken.getCreation());
                     userToken.setExpiration(newToken.getExpiration());
@@ -131,7 +133,7 @@ public class TokenProvider implements InitializingBean {
         return null;
     }
 
-    public Authentication getAuthentication(UUID token) {
+    public Authentication getAuthentication(String token) {
         Optional<Token> tokenOptional = tokenService.findByToken(token);
 
         Optional<User> user = userRepository.findOneWithAuthoritiesByLogin(tokenOptional.get().getUser().getLogin());
@@ -143,7 +145,7 @@ public class TokenProvider implements InitializingBean {
         return new UsernamePasswordAuthenticationToken(user.get().getLogin(), token, authorities);
     }
 
-    public boolean validateToken(UUID tokenValue) {
+    public boolean validateToken(String tokenValue) {
         try {
             Optional<Token> token = tokenService.findByToken(tokenValue);
             if (token.isPresent() && token.get().getExpiration().isAfter(Instant.now())) {

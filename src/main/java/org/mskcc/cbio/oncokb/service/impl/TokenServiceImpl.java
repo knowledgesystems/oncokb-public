@@ -19,7 +19,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.mskcc.cbio.oncokb.config.cache.TokenCacheResolver.TOKENS_BY_USER_LOGIN_CACHE;
@@ -85,7 +84,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public Optional<Token> findByToken(UUID token) {
+    public Optional<Token> findByToken(String token) {
         return tokenRepository.findByToken(token);
     }
 

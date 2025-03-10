@@ -92,6 +92,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/slack").permitAll()
+            .antMatchers("/api/secret-scanning").permitAll()
             // Permits the api swagger definitions through proxy
             .antMatchers("/api/v1/v2/api-docs").permitAll()
             .antMatchers("/api/private/utils/data/**").hasAnyAuthority(AuthoritiesConstants.DATA_DOWNLOAD, AuthoritiesConstants.PREMIUM_USER)
