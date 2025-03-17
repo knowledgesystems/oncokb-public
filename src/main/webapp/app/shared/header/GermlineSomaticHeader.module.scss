@@ -6,8 +6,7 @@
 .headerContent {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: 90dvw;
-  //grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, max-content);
 }
 
 .centerContent {
@@ -24,8 +23,8 @@
   word-wrap: break-word;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
   .headerContent {
-    grid-template-columns: max-content minmax(0, max-content) 1fr;
+    grid-template-columns: max-content repeat(3, minmax(0, max-content));
   }
 }

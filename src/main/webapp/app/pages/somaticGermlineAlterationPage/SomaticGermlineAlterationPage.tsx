@@ -558,7 +558,10 @@ export class SomaticGermlineAlterationPage extends React.Component<
                       cancerType: this.store.cancerTypeName,
                     }}
                     appStore={this.props.appStore}
-                    alterationNameWithDiff={this.store.alterationNameWithDiff}
+                    alteration={this.store.alterationNameWithDiff}
+                    proteinAlteration={
+                      this.store.alteration.result?.proteinChange
+                    }
                     isGermline={this.store.germline}
                   />
                 </Col>

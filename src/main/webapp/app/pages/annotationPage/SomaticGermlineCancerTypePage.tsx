@@ -570,7 +570,10 @@ export class SomaticGermlineCancerTypePage extends React.Component<
                       cancerType: this.store.cancerTypeName,
                     }}
                     appStore={this.props.appStore}
-                    alterationNameWithDiff={this.store.alterationNameWithDiff}
+                    alteration={this.store.alterationNameWithDiff}
+                    proteinAlteration={
+                      this.store.alteration.result?.proteinChange
+                    }
                     isGermline={this.store.germline}
                     extra={
                       <SomaticGermlineCancerTypeSelect
@@ -672,7 +675,7 @@ export class SomaticGermlineCancerTypePage extends React.Component<
                     )}
                 </Col>
               </Row>
-              <Row className="justify-content-center">
+              <Row className={classnames('justify-content-center', 'mt-5')}>
                 <Col md={11}>
                   {hasImplications && (
                     <h3>
@@ -702,7 +705,7 @@ export class SomaticGermlineCancerTypePage extends React.Component<
                   {hasImplications && (
                     <>
                       <CancerTypeView
-                        somaticGermline={true}
+                        somaticGermline={this.store.germline}
                         appStore={this.props.appStore}
                         isLargeScreen={this.props.windowStore.isLargeScreen}
                         userAuthenticated={

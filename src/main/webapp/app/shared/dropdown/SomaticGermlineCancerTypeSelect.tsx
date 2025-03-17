@@ -52,7 +52,7 @@ export default function SomaticGermlineCancerTypeSelect({
         'd-flex'
       )}
     >
-      {pretext}
+      {pretext && <span className="mr-2">{pretext}</span>}
       <span className={classnames('flex-grow-1')}>
         <CancerTypeSelect
           styles={{

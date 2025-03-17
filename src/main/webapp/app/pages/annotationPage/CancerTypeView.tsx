@@ -138,7 +138,9 @@ const DxPxView: React.FunctionComponent<{
   return (
     <div>
       <MiniNavBarHeader
-        id="diagnostic-prognostic-implications-of-this-biomarker"
+        id={`${
+          props.type === 'dx' ? 'diagnostic' : 'prognostic'
+        }-implications-of-this-biomarker`}
         className={classnames(
           props.somaticGermline ? undefined : 'text-primary',
           'h5'
@@ -182,7 +184,8 @@ const FdaView: React.FunctionComponent<{
         id="fda-recognized-biomarker"
         className={classnames(
           props.somaticGermline ? undefined : 'text-primary',
-          'h5'
+          'h5',
+          'mt-5'
         )}
       >
         FDA-Recognized Biomarker

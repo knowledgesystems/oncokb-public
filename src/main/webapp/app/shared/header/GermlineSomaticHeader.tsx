@@ -4,19 +4,20 @@ import { FeedbackType } from 'app/components/feedback/types';
 import { FeedbackIcon } from 'app/components/feedback/FeedbackIcon';
 import styles from './GermlineSomaticHeader.module.scss';
 import AppStore from 'app/store/AppStore';
-import { AnnotationStore } from 'app/store/AnnotationStore';
 import GeneticTypeTag from 'app/components/geneticTypeTag/GeneticTypeTag';
 export default function GermlineSomaticHeader({
   includeEmailLink,
   annotation,
   appStore,
-  alterationNameWithDiff,
+  alteration,
+  proteinAlteration,
   isGermline,
   extra,
 }: {
   includeEmailLink: boolean;
   appStore: AppStore;
-  alterationNameWithDiff: AnnotationStore['alterationNameWithDiff'];
+  alteration: string;
+  proteinAlteration?: string;
   annotation: Parameters<typeof FeedbackIcon>[0]['feedback']['annotation'];
   isGermline: boolean;
   extra?: React.ReactNode;
@@ -28,14 +29,17 @@ export default function GermlineSomaticHeader({
           className={classnames(styles.headerContentGene, styles.centerContent)}
         >
           {annotation?.gene}
-          {/* force a space between character between the two spans */}
-          &nbsp;
         </span>
         <span className={classnames(styles.headerContentGene)}>
-          {alterationNameWithDiff}
+          {alteration}
         </span>
+        {proteinAlteration && (
+          <span className={classnames(styles.headerContentGene)}>
+            {proteinAlteration}
+          </span>
+        )}
         <span className={classnames(styles.extraContent, styles.centerContent)}>
-          <GeneticTypeTag className={'ml-2'} isGermline={isGermline} />
+          <GeneticTypeTag isGermline={isGermline} />
           {extra}
           <span style={{ fontSize: '0.5em' }} className={'ml-2'}>
             {includeEmailLink && (
