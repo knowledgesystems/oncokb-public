@@ -529,6 +529,10 @@ export class SomaticGermlineCancerTypePage extends React.Component<
   }
 
   render() {
+    const cancerTypeCode =
+      this.store.allCancerTypes.result.find(
+        x => x.subtype === this.store.cancerTypeName
+      )?.code ?? '';
     const hasImplications =
       this.fdaImplication.length > 0 ||
       this.therapeuticImplications.length > 0 ||
@@ -680,7 +684,8 @@ export class SomaticGermlineCancerTypePage extends React.Component<
                   {hasImplications && (
                     <h3>
                       Clinical Implications of This Biomarker in{' '}
-                      {this.store.cancerTypeName} ({this.store.tumorTypeQuery})
+                      {this.store.cancerTypeName}
+                      {cancerTypeCode && ` (${cancerTypeCode})`}
                     </h3>
                   )}
                 </Col>

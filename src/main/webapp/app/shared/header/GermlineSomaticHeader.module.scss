@@ -6,7 +6,7 @@
 .headerContent {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: minmax(0, max-content);
+  grid-template-columns: 1fr;
 }
 
 .centerContent {
@@ -25,6 +25,12 @@
 
 @media (min-width: 800px) {
   .headerContent {
-    grid-template-columns: max-content repeat(3, minmax(0, max-content));
+    --inner-columns: 1;
+    grid-template-columns:
+      max-content repeat(var(--inner-columns), minmax(0, max-content))
+      1fr;
+  }
+  .headerContent.col4 {
+    --inner-columns: 2;
   }
 }
