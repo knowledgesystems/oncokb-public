@@ -1,0 +1,36 @@
+.header {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem !important;
+}
+
+.headerContent {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr;
+}
+
+.centerContent {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.centerContent.extraContent {
+  gap: 0.5rem;
+}
+
+.headerContentGene {
+  word-wrap: break-word;
+}
+
+@media (min-width: 800px) {
+  .headerContent {
+    --inner-columns: 1;
+    grid-template-columns:
+      max-content repeat(var(--inner-columns), minmax(0, max-content))
+      1fr;
+  }
+  .headerContent.col4 {
+    --inner-columns: 2;
+  }
+}

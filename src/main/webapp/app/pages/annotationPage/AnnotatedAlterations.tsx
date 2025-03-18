@@ -35,6 +35,7 @@ const getColumns = (germline: boolean, hugoSymbol: string) => {
             alterationRefGenomes={
               props.original.variant.referenceGenomes as REFERENCE_GENOME[]
             }
+            germline={germline}
           />
         </>
       );

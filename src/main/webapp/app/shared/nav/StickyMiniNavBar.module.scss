@@ -15,7 +15,11 @@ $sticky-border: #e3e5ec;
 }
 
 .nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   border-bottom: 1px solid $sticky-border;
+  min-height: 49px;
 }
 
 .containerSticky {
@@ -45,4 +49,12 @@ $sticky-border: #e3e5ec;
   @extend .font-bold;
   font-weight: bold;
   border-bottom-color: $primary;
+}
+
+@media (min-width: 550px) {
+  .nav {
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+  }
 }
